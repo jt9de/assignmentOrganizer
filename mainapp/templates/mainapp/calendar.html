@@ -1,0 +1,37 @@
+{% include 'mainapp/sidebar.html' %}
+<div class="home-section">
+  <div class="header">
+    <h1>Calendar</h1>
+    <h6>Click to Edit Bar Color</h6>
+  </div>
+  <form action="{% url 'change_color' %}" method="post">
+    {% csrf_token %}
+    <input onclick="colorChosen()" type="color" name="colorpicker" value="{{ CLASS_COLOR }}">
+    <button type="submit" class="hiddenButton">Change Color</button>
+    </input>
+  </form>
+  <!-- the calendar structure comes from https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html -->
+  {% block content %}
+  <form action="{% url 'prev_month' month_id=next_month %}" style="width:100%;">
+    <button type="submit"
+      style="border-radius: 80px; border:none; position:absolute; color:white; left:20%; top: 105px; font-size:20px;background-color:rgb(255, 186, 57);width:250px;height:40px;">
+      <i class='bx bx-chevron-left'></i>Previous Month </button>
+  </form>
+
+  <form action="{% url 'add_assignment' %}" style="width:100%;">
+    <button type="submit"
+      style="border-radius: 80px; border:none; position:absolute; color:white; right:2%; top: 105px; font-size:20px;background-color:rgb(51, 218, 0);width:250px;height:40px;">
+      <i class='bx bx-plus'></i>Create an Assignment </button>
+  </form>
+
+  <form action="{% url 'next_month' month_id=next_month %}" style="width:100%;">
+    <button type="submit"
+      style="border-radius: 80px; border:none; position:absolute; color:white; right:20%; top: 105px; font-size:20px;background-color:rgb(255, 186, 57);width:250px;height:40px;">
+      Next Month<i class='bx bx-chevron-right'></i></button>
+  </form>
+
+  {{ calendar }}
+
+  {% endblock %}
+
+</div>

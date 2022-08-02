@@ -1,0 +1,24 @@
+{% include 'mainapp/sidebar.html' %}
+<div class="home-section">
+  <div class="header">
+    <h1>Upload a File for {{ className }}</h1>
+    <h6>Click to Edit Bar Color for {{ className }}</h6>
+  </div>
+  <form action="{% url 'change_color' className=className %}" method="post">
+    {% csrf_token %}
+    <input onclick="colorChosen()" type="color" name="colorpicker" value="{{ CLASS_COLOR }}">
+    <button type="submit" class="hiddenButton">Change Color</button>
+    </input>
+  </form>
+  {% load crispy_forms_tags %}
+  {% block content %}
+  <h2>Upload Files</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form|crispy}}
+
+    <button type="submit" class="btn btn-primary">Upload File</button>
+  </form>
+
+  {% endblock %}
+</div>

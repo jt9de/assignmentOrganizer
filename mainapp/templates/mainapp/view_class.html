@@ -1,0 +1,45 @@
+{% include 'mainapp/sidebar.html' %}
+<div class="home-section">
+  <html>
+  <div class="header">
+    <h1>{{ class.className }}</h1>
+    <h6>Click to Edit Bar Color for {{ class.className }}</h6>
+  </div>
+  <form action="{% url 'change_color' className=class.className %}" method="post">
+    {% csrf_token %}
+    <input onclick="colorChosen()" type="color" name="colorpicker" value="{{ CLASS_COLOR }}">
+    <button type="submit" class="hiddenButton">Change Color</button>
+    </input>
+  </form>
+
+  <h3 style="margin:auto;width:100%;text-align:center;">
+    {{ class.description }}
+  </h3>
+
+  <a href="{% url 'file_list' className=class.className %}" style="margin:auto;width:100%;">
+    <button
+      style="font-size: 24; border: none; width: 18rem; height: 4rem; background-color: rgb(135, 163, 255); color: white; border-radius:40px;margin:auto;"><i
+        class='bx bx-file'></i> Files</button>
+  </a>
+  {% if IS_ASSIGNED_PROFESSOR %}
+  <a href="{% url 'add_assignment' className=class.className %}">
+    <button
+      style="font-size: 24; border: none; width: 18rem; height: 4rem; background-color: rgb(135, 163, 255); color: white; border-radius:40px;"><i
+        class='bx bx-file'></i> Add an Assignment</button>
+  </a>
+  {% endif %}
+  {% if has_todo %}
+  <div style="width:50%; left: 25%;margin:auto;">
+    <h3>Upcoming Assignments for {{class.className}}</h3>
+    <div style="position: absolute; width:50%;">
+      {{todo}}
+    </div>
+  </div>
+  {% else %}
+  <div style="top:250px; width:50%; left: 25%; text-align:center;margin:auto;">
+    <h3>No Upcoming Assignments for {{class.className}}</h3>
+  </div>
+  {% endif %}
+
+  </html>
+</div>
